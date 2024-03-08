@@ -10,6 +10,9 @@ fetch(`./api/authCode/${authCode}`)
     console.log('res',res);
     window.localStorage.setItem("authCode")
   })
-  .catch(() => {
-    window.location.reload();
+  .catch((e) => {
+    console.log(' ----')
+    console.log('e:', e)
+    console.log(' ----')
+    // window.location.reload();
   });
