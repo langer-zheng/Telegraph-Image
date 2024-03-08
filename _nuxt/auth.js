@@ -17,6 +17,7 @@ fetch(`./api/authCode/${authCode}`)
     }
   })
   .catch((e) => {
+    window.localStorage.removeItem("authCode")
     console.log(" ----");
     console.log("e:", e);
     console.log(" ----");
