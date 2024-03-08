@@ -41,6 +41,7 @@ export async function onRequest(context) {  // Contents of context object
                     console.log("Referer")
                     console.log(request.headers.get('Referer'))
                     if(typeof request.headers.get('Referer') == "undefined" ||request.headers.get('Referer') == null || request.headers.get('Referer') == ""){
+                        console.log('url.origin+"/block-img.html"', url.origin+"/block-img.html");
                         return Response.redirect(url.origin+"/block-img.html", 302)
                     }else{
                         return Response.redirect("https://static-res.pages.dev/teleimage/img-block-compressed.png", 302)
