@@ -1,4 +1,5 @@
 # Telegraph-Image
+
 免费图片托管解决方案，Flickr/imgur替代品。使用Cloudflare Pages和Telegraph。
 
 [English](README-EN.md)|中文
@@ -6,9 +7,11 @@
 ## 如何部署
 
 ### 提前准备
+
 你唯一需要提前准备的就是一个Cloudflare账户 （如果需要在自己的服务器上部署，不依赖Cloudflare，可参考[#46](https://github.com/cf-pages/Telegraph-Image/issues/46) ）
 
 ### 手把手教程
+
 简单3步，即可部署本项目，拥有自己的图床
 
 1.下载或Fork本仓库 (注意：目前请使用fork，在使用下载[#14](https://github.com/cf-pages/Telegraph-Image/issues/14)部署存在问题)
@@ -19,6 +22,7 @@
 3. 按照页面提示输入项目名称，选择需要连接的git仓库（第一步选择的是fork）或是上传刚刚下载的仓库文件（第一步选择的是下载本仓库），点击`部署站点`即可完成部署
 
 ## 特性
+
 1.无限图片储存数量，你可以上传不限数量的图片
 
 2.无需购买服务器，托管于Cloudflare的网络上，当使用量不超过Cloudflare的免费额度时，完全免费
@@ -30,10 +34,12 @@
 5.支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作
 
 ### 绑定自定义域名
+
 在pages的自定义域里面，绑定cloudflare中存在的域名，在cloudflare托管的域名，自动会修改dns记录
 ![2](https://telegraph-image.pages.dev/file/29546e3a7465a01281ee2.png)
 
 ### 开启图片审查
+
 1.请前往https://moderatecontent.com/ 注册并获得一个免费的用于审查图像内容的API key
 
 2.打开Cloudflare Pages的管理页面，依次点击`设置`，`环境变量`，`添加环境变量`
@@ -46,6 +52,7 @@
 ![3](https://telegraph-image.pages.dev/file/bae511fb116b034ef9c14.png)
 
 ### 限制
+
 1.由于图片文件实际存储于Telegraph，Telegraph限制上传的图片大小最大为5MB
 
 2.由于使用Cloudflare的网络，图片的加载速度在某些地区可能得不到保证
@@ -53,24 +60,37 @@
 3.Cloudflare Function免费版每日限制100,000个请求（即上传或是加载图片的总次数不能超过100,000次）如超过可能需要选择购买Cloudflare Function的付费套餐，如开启图片管理功能还会存在KV操作数量的限制，如超过需购买付费套餐
 
 ### 感谢
+
 Hostloc @feixiang和@乌拉擦 提供的思路和代码
 
 ## 更新日志
+
+2024年3月8日
+
+- 新增简单的上传权限认证--新增环境变量`AUTH_CODE`，需要在cf部署的环境变量中配置，上传页面输入正确的AUTH_CODE才能上传
+  ![](https://telegraph-image-cvp.pages.dev/file/a42358d4410f2ed037c1f.png)
+- 优化黑名单缓存导致的无法及时生效
+  现在只要放入黑名单就无法访问
+
 2023年1月18日--图片管理功能更新
 
 1、支持图片管理功能，默认是关闭的，如需开启请部署完成后前往后台依次点击`设置`->`函数`->`KV 命名空间绑定`->`编辑绑定`->`变量名称`填写：`img_url` `KV 命名空间` 选择你提前创建好的KV储存空间，开启后访问http(s)://你的域名/admin 即可打开后台管理页面
-| 变量名称      | KV 命名空间 |
-| ----------- | ----------- |
-| img_url     | 选择提前创建好的KV储存空间 |
+
+
+| 变量名称 | KV 命名空间                |
+| -------- | -------------------------- |
+| img_url  | 选择提前创建好的KV储存空间 |
 
 ![](https://im.gurl.eu.org/file/a0c212d5dfb61f3652d07.png)
 ![](https://im.gurl.eu.org/file/48b9316ed018b2cb67cf4.png)
 
 2、后台管理页面新增登录验证功能，默认也是关闭的，如需开启请部署完成后前往后台依次点击`设置`->`环境变量`->`为生产环境定义变量`->`编辑变量` 添加如下表格所示的变量即可开启登录验证
-| 变量名称      | 值 |
-| ----------- | ----------- |
-|BASIC_USER   = | <后台管理页面登录用户名称>|
-|BASIC_PASS    = | <后台管理页面登录用户密码>|
+
+
+| 变量名称        | 值                         |
+| --------------- | -------------------------- |
+| BASIC_USER   =  | <后台管理页面登录用户名称> |
+| BASIC_PASS    = | <后台管理页面登录用户密码> |
 
 ![](https://im.gurl.eu.org/file/dff376498ac87cdb78071.png)
 
@@ -114,9 +134,11 @@ ListType代表图片当前是否在黑白名单当中，None则表示既不在�
 ![](https://im.gurl.eu.org/file/740cd5a69672de36133a2.png)
 
 ## 已经部署了的，如何更新？
+
 其实更新非常简单，只需要参照上面的更新内容，先进入到Cloudflare Pages后台，把需要使用的环境变量提前设置好并绑定上KV命名空间，然后去到Github你之前fork过的仓库依次选择`Sync fork`->`Update branch`即可，稍等一会，Cloudflare Pages那边检测到你的仓库更新了之后就会自动部署最新的代码了
 
 ## 一些限制：
+
 Cloudflare KV每天只有1000次的免费写入额度，每有一张新的图片加载都会占用该写入额度，如果超过该额度，图片管理后台将无法记录新加载的图片
 
 每天最多 100,000 次免费读取操作，图片每加载一次都会占用该额度（在没有缓存的情况下，如果你的域名在Cloudflare开启了缓存，当缓存未命中时才会占用该额度），超过黑白名单等功能可能会失效
@@ -133,7 +155,8 @@ Cloudflare KV每天只有1000次的免费写入额度，每有一张新的图片
 
 ![](https://im.gurl.eu.org/file/b514467a4b3be0567a76f.png)
 
-### Sponsorship 
+### Sponsorship
+
 This project is tested with BrowserStack.
 
 This project is support by [Cloudflare](https://www.cloudflare.com/).
