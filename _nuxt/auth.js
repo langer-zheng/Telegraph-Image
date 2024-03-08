@@ -12,6 +12,7 @@ fetch(`./api/authCode/${authCode}`)
     if (isOK === "ok") {
       window.localStorage.setItem("authCode", authCode);
     } else {
+      window.location.reload()
       console.log("status", status);
     }
   })
@@ -19,5 +20,5 @@ fetch(`./api/authCode/${authCode}`)
     console.log(" ----");
     console.log("e:", e);
     console.log(" ----");
-    // window.location.reload();
+    window.location.reload();
   });
