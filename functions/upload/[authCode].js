@@ -10,10 +10,7 @@ export async function onRequestPost(context) {
     } = context;
     context.request;
     const url = new URL(request.url);
-    console.log(' -----------------------')
-    console.log('onRequestPost upload url:', url)
-    console.log(' -----------------------')
-    if (decodeURIComponent(params.code) === env.AUTH_CODE) {
+    if (decodeURIComponent(params.authCode) === env.AUTH_CODE) {
         const response = fetch("https://telegra.ph/" + url.pathname + url.search, {
         method: request.method,
         headers: request.headers,
