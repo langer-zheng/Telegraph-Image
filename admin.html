@@ -124,7 +124,6 @@
     </el-container>
   </div>
 </body>
-  <script src="https://cdn.jsdelivr.net/npm/copy-to-clipboard@3.3.3/index.min.js"></script>
   <!-- import Vue before Element -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js" integrity="sha256-kXTEJcRFN330VirZFl6gj9+UM6gIKW195fYZeR3xDhc=" crossorigin="anonymous"></script>
   <!-- import JavaScript -->
@@ -149,7 +148,17 @@
       },
       methods: {
       handleCopy(name){
-        copyToClipboard(window.location.origin+"/file/"+name);
+        // 创建一个文本元素
+        var textElement = document.createElement('textarea');
+        textElement.value = window.location.origin+"/file/"+name;
+        // 将文本元素添加到页面中
+        document.body.appendChild(textElement);
+        // 选择文本元素中的文本
+        textElement.select();
+        // 执行复制操作
+        document.execCommand('copy');
+        // 移除文本元素
+        document.body.removeChild(textElement);
       },
       handleBlock(index,key) {
         console.log(key);
