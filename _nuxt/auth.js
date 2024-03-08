@@ -8,9 +8,8 @@ const authCode =
   window.localStorage.getItem("authCode") || window.prompt("authCode");
 fetch(`./api/authCode/${authCode}`)
   .then(async (res) => {
-    console.log("res", res);
-    const { status } = await res.json();
-    if (status === 200) {
+    const isOK = await res.text();
+    if (isOK === "ok") {
       window.localStorage.setItem("authCode", authCode);
     } else {
       console.log("status", status);

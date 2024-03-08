@@ -23,9 +23,9 @@ export async function onRequest(context) {
   } = context;
   console.log(env);
   console.log(params.code);
-  if (params.code === env.AUTH_CODE) {
-    return new Response(JSON.stringify({ status: 200 }));
+  if (decodeURIComponent(params.code) === env.AUTH_CODE) {
+    return new Response("ok");
   } else {
-    return new UnauthorizedException("no auth");
+    return new UnauthorizedException("error");
   }
 }
