@@ -10,14 +10,13 @@ export async function onRequestPost(context) {
   } = context;
   context.request;
   const url = new URL(request.url);
-  if (window.localStorage.getItem("auth") === env.AUTH_CODE) {
-    const response = fetch("https://telegra.ph/" + url.pathname + url.search, {
-      method: request.method,
-      headers: request.headers,
-      body: request.body,
-    });
-    return response;
-  } else {
-    window.location.reload();
-  }
+  console.log(' -----------------------')
+  console.log('onRequestPost upload url:', url)
+  console.log(' -----------------------')
+  const response = fetch("https://telegra.ph/" + url.pathname + url.search, {
+    method: request.method,
+    headers: request.headers,
+    body: request.body,
+  });
+  return response;
 }
